@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vue App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <img :src="image" width="150" />
+
+    <h1>{{ message }}</h1>
+    <p>Version : {{ version }}</p>
+    <p>Price : {{ priceLicence }} €</p>
+    <h3 v-show="notAvailable">Momentanément indisponible</h3>
+
+    <b>Statut : {{ notAvailable ? 'Inactif' : 'Actif' }}</b>
+    <br><br>
+
+    <button 
+        :class="{ notActiveBtn: notAvailable }"
+        :disabled="notAvailable"
+        @click="doSum">
+        Add to my Bag
+    </button>
+
+    <br><br>
+
+    <table border="1">
+        <tr>
+            <td>Formation</td>
+            <td>{{ message }} - {{ version }}</td>
+        </tr>
+        <tr>
+            <td>Number Licence</td>
+            <td>{{ nbrLicence }}</td>
+        </tr>
+        <tr>
+            <td>Total Price</td>
+            <td>{{ totalePrice }} €</td>
+        </tr>
+    </table>
+</div>
+
+<script>
+const app = Vue.createApp({
+    data() {
+        return {
+            message: "Hello Vue.js",
+            version: 3,
+            image: "https://vuejs.org/images/logo.png",
+            priceLicence: 12,
+            totalePrice: 0,
+            nbrLicence: 0,
+            notAvailable: false
+        }
+    },
+    methods: {
+        doSum() {
+            this.nbrLicence += 1;
+            this.totalePrice = this.priceLicence * this.nbrLicence;
+        }
+    }
+});
+
+app.mount('#app');
+</script>
+
+</body>
+</html>

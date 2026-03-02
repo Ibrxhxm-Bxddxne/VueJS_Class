@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Vue Chapitres</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <img :src="image" width="120">
+
+    <h1>{{ message }}</h1>
+    <p>Version : {{ version }}</p>
+    <p>Price : {{ priceLicence }} €</p>
+
+    <p><b>Chapitres :</b></p>
+
+    <ul>
+        <li v-for="chapitre in chapitres" 
+            :key="chapitre.name"
+            :style="{ color: chapitre.color }">
+
+            {{ chapitre.name }} - v{{ chapitre.version }}
+
+        </li>
+    </ul>
+</div>
+
+<script>
+const app = Vue.createApp({
+    data() {
+        return {
+            message: "Hello Vue.js",
+            version: 3,
+            image: "https://vuejs.org/images/logo.png",
+            priceLicence: 12,
+            chapitres: [
+                { name: "HTML", version: 5, color: "#FF5733" },
+                { name: "CSS", version: 3, color: "#337CFF" },
+                { name: "JavaScript", version: 6, color: "#F7DF1E" },
+                { name: "Vue.js", version: 3, color: "#42B883" }
+            ]
+        }
+    }
+});
+
+app.mount('#app');
+</script>
+
+</body>
+</html>

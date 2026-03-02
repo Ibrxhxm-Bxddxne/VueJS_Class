@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vue.js 3 Styling Exercise</title>
+
+<!-- Import Vue.js 3 CDN -->
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<!-- CSS -->
+<style>
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Box de base */
+.box {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    display: inline-block;
+    text-align: center;
+    line-height: 100px;
+    transition: all 0.3s ease;
+    color: white;
+    font-weight: bold;
+}
+
+/* Couleurs */
+.box-red {
+    background-color: red;
+}
+
+.box-blue {
+    background-color: blue;
+}
+
+/* Transition fade */
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.5s;
+}
+
+.fade-enter-from, .fade-leave-to {
+    opacity: 0;
+}
+
+/* Animation bounce */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+.bounce {
+    animation: bounce 2s infinite;
+}
+
+button {
+    margin: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div id="app">
+    <button @click="toggleColor">Toggle Color</button>
+    <button @click="toggleBounce">Toggle Bounce</button>
+    <button @click="toggleBox">Toggle Box</button>
+
+    <transition name="fade">
+        <div 
+            v-if="showBox" 
+            :class="['box', isRed ? 'box-red' : 'box-blue', { bounce: isBouncing }]" 
+            :style="customStyle">
+            Box
+        </div>
+    </transition>
+</div>
+
+<!-- JS -->
+<script>
+const app = Vue.createApp({
+    data() {
+        return {
+            isRed: true,
+            isBouncing: false,
+            showBox: true,
+            customStyle: {
+                width: '150px',
+                height: '150px'
+            }
+        }
+    },
+    methods: {
+        toggleColor() {
+            this.isRed = !this.isRed;
+        },
+        toggleBounce() {
+            this.isBouncing = !this.isBouncing;
+        },
+        toggleBox() {
+            this.showBox = !this.showBox;
+        }
+    }
+});
+
+app.mount('#app');
+</script>
+
+</body>
+</html>
