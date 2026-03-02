@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>TP4 - Vue.js Moderne</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.card {
+    background: white;
+    width: 400px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.logo {
+    width: 90px;
+    margin-bottom: 15px;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 5px;
+}
+
+p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+hr {
+    margin: 15px 0;
+    border: none;
+    height: 1px;
+    background: #eee;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #444;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #667eea;
+    outline: none;
+    box-shadow: 0 0 5px rgba(102,126,234,0.5);
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-calc {
+    background: #667eea;
+    color: white;
+}
+
+.btn-calc:hover {
+    background: #5a67d8;
+}
+
+.btn-reset {
+    background: #e53e3e;
+    color: white;
+}
+
+.btn-reset:hover {
+    background: #c53030;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    background: #f3f4f6;
+}
+
+.highlight {
+    color: #667eea;
+}
+</style>
+</head>
+
+<body>
+
+<div id="app">
+    <div class="card">
+
+        <img :src="logo_etablissement" class="logo">
+        <h2>{{ etablissement }}</h2>
+        <p>{{ annee_universitaire }}</p>
+        <p><strong>{{ module_vuejs }}</strong></p>
+
+        <hr>
+
+        <div class="input-group">
+            <label>Note CC1</label>
+            <input type="number" v-model.number="note_cc1" min="0" max="20">
+        </div>
+
+        <div class="input-group">
+            <label>Note CC2</label>
+            <input type="number" v-model.number="note_cc2" min="0" max="20">
+        </div>
+
+        <div class="input-group">
+            <label>Note EFM</label>
+            <input type="number" v-model.number="note_efm" min="0" max="20">
+        </div>
+
+        <button class="btn-calc" @click="calculerNote">
+            Calculer la note finale
+        </button>
+
+        <button class="btn-reset" @click="initialiserNote">
+            Initialiser
+        </button>
+
+        <div class="result">
+            Note finale : 
+            <span class="highlight">{{ note_finale.toFixed(2) }}</span>
+        </div>
+
+    </div>
+</div>
+
+<script>
+new Vue({
+    el: '#app',
+    data() {
+        return {
+            logo_etablissement: "https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg",
+            etablissement: "Votre Établissement",
+            annee_universitaire: "2025 - 2026",
+            module_vuejs: "Module Vue.js",
+            note_cc1: 0,
+            note_cc2: 0,
+            note_efm: 0,
+            note_finale: 0
+        }
+    },
+    methods: {
+        calculerNote() {
+            this.note_finale = ((this.note_cc1 * 25) + 
+                               (this.note_cc2 * 25) + 
+                               (this.note_efm * 50)) / 100;
+        },
+        initialiserNote() {
+            this.note_cc1 = 0;
+            this.note_cc2 = 0;
+            this.note_efm = 0;
+            this.note_finale = 0;
+        }
+    }
+});
+</script>
+
+</body>
+</html>

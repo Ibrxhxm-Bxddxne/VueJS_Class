@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>TP5 VueJS</title>
+
+    <!-- Importation de Vue.js depuis CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        img {
+            width: 120px;
+        }
+        input {
+            margin: 5px;
+            padding: 5px;
+        }
+        button {
+            padding: 6px 10px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+
+    <!-- Affichage des informations -->
+    <img :src="logo_etablissement" alt="Logo établissement">
+    <h2>{{ etablissement }}</h2>
+    <h3>{{ annee_universitaire }}</h3>
+    <h4>Module : {{ module_vuejs }}</h4>
+
+    <hr>
+
+    <!-- Champs avec liaison bidirectionnelle -->
+    <label>Note CC1 :</label>
+    <input type="number" v-model.number="note_cc1">
+
+    <br>
+
+    <label>Note CC2 :</label>
+    <input type="number" v-model.number="note_cc2">
+
+    <br>
+
+    <label>Note EFM :</label>
+    <input type="number" v-model.number="note_efm">
+
+    <br>
+
+    <!-- Bouton pour calculer note_finale1 -->
+    <button @click="doNoteMethod">
+        Calculer la note finale
+    </button>
+
+    <hr>
+
+    <h3>Note finale (Méthode) : {{ note_finale1 }}</h3>
+    <h3>Note finale (Computed) : {{ doNoteComputed }}</h3>
+
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+
+        data() {
+            return {
+                logo_etablissement: "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg", 
+                etablissement: "Mon Établissement",
+                annee_universitaire: "2025 / 2026",
+                module_vuejs: "Vue.js",
+
+                note_cc1: 0,
+                note_cc2: 0,
+                note_efm: 0,
+
+                note_finale1: 0
+            }
+        },
+
+        methods: {
+            // Calcul avec bouton
+            doNoteMethod() {
+                this.note_finale1 = ((this.note_cc1 * 25) + 
+                                     (this.note_cc2 * 25) + 
+                                     (this.note_efm * 50)) / 100;
+            }
+        },
+
+        computed: {
+            // Calcul automatique
+            doNoteComputed() {
+                return ((this.note_cc1 * 25) + 
+                        (this.note_cc2 * 25) + 
+                        (this.note_efm * 50)) / 100;
+            }
+        }
+
+    });
+</script>
+
+</body>
+</html>

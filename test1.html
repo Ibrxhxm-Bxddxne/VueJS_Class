@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Vue App</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <img v-bind:src="image" />
+        <h1>{{ message }}</h1>
+        <p>{{ version }}</p>
+        <p>Developper :
+            <input v-model = "developper" type="text">
+        </p>
+
+        <p><b>Hello {{ developper }}</b></p>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    message: "hello world",
+                    version : 3,
+                    image : "/assets/images/logo.png",
+                    developper : ""
+                }
+            }
+        })
+
+        app.mount('#app')
+    </script>
+
+</body>
+</html>
