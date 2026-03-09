@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vue.js 3 Components Exercise</title>
+
+<style>
+.button {
+padding: 10px 20px;
+margin: 5px;
+background-color: #42b983;
+color: white;
+border: none;
+cursor: pointer;
+}
+</style>
+
+</head>
+<body>
+
+<div id="app">
+</div>
+
+<!-- Import Vue.js CDN -->
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<script>
+
+// Composant enfant
+const ChildComponent = {
+props: ['message'],
+
+template: `
+<div>
+<p>{{ message }}</p>
+<button @click="emitEvent" class="button">Click me</button>
+</div>
+`,
+
+methods: {
+emitEvent() {
+this.$emit('child-clicked', 'Message from Child')
+}
+}
+}
+
+// Application Vue (composant parent)
+const app = Vue.createApp({
+
+data() {
+return {
+parentMessage: 'Hello from Parent',
+childResponse: ''
+}
+},
+
+methods: {
+handleChildEvent(payload) {
+this.childResponse = payload
+}
+},
+
+components: {
+'child-component': ChildComponent
+},
+
+template: `
+<div>
+<h1>{{ parentMessage }}</h1>
+
+<child-component
+:message="parentMessage"
+@child-clicked="handleChildEvent">
+</child-component>
+
+<p>{{ childResponse }}</p>
+
+</div>
+`
+
+})
+
+app.mount('#app')
+
+</script>
+
+</body>
+</html>
