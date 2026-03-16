@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Pizza VueJS</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f5f5f5;
+margin:0;
+padding:0;
+}
+
+#app{
+width:900px;
+margin:auto;
+background:white;
+padding:20px;
+}
+
+.header{
+display:flex;
+gap:40px;
+align-items:center;
+}
+
+img{
+border-radius:10px;
+}
+
+ul{
+list-style:none;
+padding:0;
+}
+
+li{
+margin:5px 0;
+}
+
+.sauce{
+width:40px;
+height:40px;
+border-radius:50%;
+display:inline-block;
+margin:5px;
+cursor:pointer;
+border:2px solid #ccc;
+}
+
+button{
+padding:10px 20px;
+background:#db4006;
+color:white;
+border:none;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#a52e04;
+}
+
+.indispo{
+color:red;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="app">
+
+<h1>{{ title }}</h1>
+
+<div class="header">
+
+<div>
+<img :src="image" width="350">
+</div>
+
+<div>
+
+<p v-if="notAvailable" class="indispo">
+Momentanément indisponible
+</p>
+
+<p v-if="sale">
+Prix promotionnel : {{ price }} €
+</p>
+
+<p v-else>
+Prix : {{ price }} €
+</p>
+
+</div>
+
+</div>
+
+<h2>Ingrédients</h2>
+
+<ul>
+<li v-for="ing in ingrediants">
+{{ ing }}
+</li>
+</ul>
+
+<h2>Types de sauces</h2>
+
+<div>
+
+<span
+class="sauce"
+v-for="sauce in sauces"
+:key="sauce.id"
+:style="{backgroundColor:sauce.color}"
+@mouseover="updateImage(sauce.image)"
+:title="sauce.type"
+>
+</span>
+
+</div>
+
+<h2>Valeurs nutritionnelles</h2>
+
+<ul>
+<li>Kcal : {{ energy.Kcal }}</li>
+<li>Glucides : {{ energy.Glucides }}</li>
+<li>Fibres : {{ energy.Fibres }}</li>
+<li>Protéines : {{ energy.Proteines }}</li>
+<li>Sel : {{ energy.Sel }}</li>
+</ul>
+
+<h2>Commander</h2>
+
+<input
+type="text"
+v-model="promo"
+placeholder="Code promo"
+/>
+
+<br><br>
+
+<button @click="addProduct()">
+Ajouter une pizza
+</button>
+
+<p>Nombre de pizzas : {{ nbrProduct }}</p>
+
+<p>Total à payer : {{ totalePrice }} €</p>
+
+</div>
+
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<script>
+
+const app = Vue.createApp({
+
+data(){
+return{
+
+product:'Pizza',
+type:'Orientale',
+price:12,
+
+image:"assets/images/pizza1-tomate.jpg",
+
+sale:true,
+notAvailable:true,
+
+ingrediants:[
+"Olives",
+"Poulet roti",
+"Bacon",
+"Poivrons",
+"Champignons",
+"Mozzarella",
+"Oeuf"
+],
+
+sauces:[
+{
+id:1001,
+type:"Sauce Tomate",
+color:"#db4006",
+image:"assets/images/pizza1-tomate.jpg"
+},
+{
+id:1002,
+type:"Crème Fraiche",
+color:"#e9cb8f",
+image:"assets/images/pizza1-creme.jpg"
+}
+],
+
+energy:{
+Kcal:242,
+Glucides:27.99,
+Fibres:1.75,
+Proteines:9.62,
+Sel:11
+},
+
+totalePrice:0,
+nbrProduct:0,
+promo:''
+
+}
+},
+
+methods:{
+
+addProduct(){
+
+this.nbrProduct++
+
+this.totalePrice=this.nbrProduct*this.price
+
+if(this.promo==="royale"){
+this.totalePrice=this.totalePrice*0.5
+}
+
+},
+
+updateImage(img){
+
+this.image=img
+
+}
+
+},
+
+computed:{
+
+title(){
+return this.product+" "+this.type
+}
+
+}
+
+})
+
+app.mount("#app")
+
+</script>
+
+</body>
+</html>
